@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, current_app
 from flask_login import login_required, current_user
 from .models import Note
 from . import db
 import json
+import os
 
-views = Blueprint('views', __name__)
+views = Blueprint('views', __name__, template_folder="templates")
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -34,3 +35,15 @@ def delete_note():
 			db.session.commit()
 			
 	return jsonify({})
+
+
+@views.route('/upload_files', methods=["GET", "POST"])
+def upload_files():
+	if request.method == 'POST':
+		for f in request.files.getlist('file_name'):
+			#f = request.files['file_name']
+			f.save(os.path.join(current_app.config["UPLOAD_PATH"], f.filename))
+		return render_template("upload-files.html", msg="Files has been uploaded successfully")
+	return render_template("upload-files.html", msg="Please Choose a file")
+
+
