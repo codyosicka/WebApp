@@ -6,6 +6,7 @@ import json
 import os
 import paypalrestsdk
 
+
 views = Blueprint('views', __name__, template_folder="templates")
 
 
@@ -103,3 +104,4 @@ def execute():
         print(payment.error)
 
     return jsonify({'success' : success})
+

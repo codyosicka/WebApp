@@ -3,7 +3,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-import paypalrestsdk
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -14,12 +13,6 @@ def create_app():
 	app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 	app.config["UPLOAD_PATH"] = 'C:\\Users\\Buff14\\Desktop\\uploaded_files'
 	db.init_app(app)
-
-	paypalrestsdk.configure({
-	"mode": "sandbox", # sandbox or live
-	"client_id": "AYbnfU8Pj_yiF8ULPsCiU_R7vqDvIZfFP1s0qWUrokJM5W5ON9ypx56X4mqqzcrUKmrT_eZmvTqkGpop",
-	"client_secret": "EE6mphrPS35PzRXwE1ZtsWWHMznLhBxrKh5vIxHtuxcCChGc0PpD9SELqpZgmenoGuLEDGR-CxvyRZ6W"
-	})
 
 	from .views import views
 	from .auth import auth
