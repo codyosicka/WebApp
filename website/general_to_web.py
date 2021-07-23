@@ -5,7 +5,7 @@ from GeneralPythonCopy.General import General
 
 Process for User uploading data:
 
-1. User: uploads files to Website (discrete occurance)
+1. User: uploads files to Website and chooses the y_variable for the regression (discrete occurance)
 2. Backend: uploaded files go to uploaded_files which is accessible to the Web App py files 
 3. Backend: performs gp_symbolic_regression on the information uploaded (discrete occurance)
 4. Backend: uploads equation results to equations database (discrete occurance)

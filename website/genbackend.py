@@ -15,10 +15,11 @@ else:
 
 print("there are files in the uploaded_files")
 
-list_of_regressions = []
-for file in range(len(list_of_files)):
-	#list_of_regressions.append()
+
+
+dict_of_regression = {}
+for file in list_of_files:
+	dict_of_regression[f'{file}'] = General.gp_symbolic_regression(file, )
 	pass
 
-#x = General.gp_symbolic_regression()
 
