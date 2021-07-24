@@ -42,11 +42,22 @@ def delete_note():
 @views.route('/upload_files', methods=["GET", "POST"])
 def upload_files():
 	if request.method == 'POST':
+		yvariable = request.form["yvar"]
+		save_path = current_app.config["UPLOAD_PATH"]
+		file_text_name = "data.txt"
+		completeName = os.path.join(save_path, file_text_name)
+		outfile = open(completeName, 'w')
+		outfile.write(yvariable)
+		outfile.close()
 		for f in request.files.getlist('file_name'):
 			#f = request.files['file_name']
 			f.save(os.path.join(current_app.config["UPLOAD_PATH"], f.filename))
 		return render_template("upload-files.html", msg="Files has been uploaded successfully")
 	return render_template("upload-files.html", msg="Please Choose a file")
+
+
+
+
 
 
 paypalrestsdk.configure({

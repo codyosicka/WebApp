@@ -1,7 +1,23 @@
-
+{% block title %}Data Upload{% endblock %}
+<br>
+<br>
+{% block content %}
 {{msg}}
 <br>
 <form action="/upload_files" method="POST" enctype="multipart/form-data">
 	<input type="file" name="file_name" multiple>
 	<input type="submit" value="Submit">
 </form>
+
+<br>
+
+<form action="#" method="POST">
+	<p>Please Choose a Y Variable:</p>
+	<p><input type="text" name="yvar" /></p>
+	<p><input type="submit" value="Submit" /></p>
+</form>
+{% endblock %}
+
+
+
+
