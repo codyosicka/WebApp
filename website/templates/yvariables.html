@@ -1,0 +1,33 @@
+{% block title %}Y Variables Input{% endblock %}
+
+<br>
+<br>
+
+
+{% block content %}
+
+<form action="/#" method="POST" role=form>
+{{ form.hidden_tag() }}
+
+{% for b in form.a2 %}
+	{{ b.form.b1.label }} {{ b.form.b1 }}<br>
+
+{% endfor %}
+
+{{ form.s }}
+
+
+</form>
+
+<br>
+<br>
+
+
+{{msg}}
+<form action="#" method="POST">
+	<p>Inputs:</p>
+	<p><input type="text" name="yvar" /></p>
+	<p><input type="submit" value="Submit" /></p>
+</form>
+
+{% endblock %}
