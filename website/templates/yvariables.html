@@ -9,8 +9,9 @@
 <form action="/#" method="POST" role=form>
 {{ form.hidden_tag() }}
 
-{% for b in form.a2 %}
-	{{ b.form.b1.label }} {{ b.form.b1 }}<br>
+{% for file in form.a2 %}
+
+	{{ file.lable }} {{ file }}<br>
 
 {% endfor %}
 
