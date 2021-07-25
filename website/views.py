@@ -61,7 +61,6 @@ def upload_files():
 
 
 
-
 class B(FlaskForm):
 	path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
 	directory = os.listdir(path)
@@ -69,29 +68,52 @@ class B(FlaskForm):
 	if len(directory) != 0:
 		for file in directory:
 			list_of_files.append(file)
-	list_of_files_copy = list_of_files
-	for file in range(len(list_of_files)):
-		if ".csv" in list_of_files[file]:
-			list_of_files[file] = list_of_files[file].replace(".csv", "")
-			list_of_files[file] = list_of_files[file].replace("-", "_")
-		elif ".xlsx" in list_of_files[file]:
-			list_of_files[file] = list_of_files[file].replace(".xlsx", "")
-			list_of_files[file] = list_of_files[file].replace("-", "_")
-		file+=1
+	#list_of_files_copy = list_of_files
+	#for file in range(len(list_of_files)):
+		#if ".csv" in list_of_files[file]:
+			#list_of_files[file] = list_of_files[file].replace(".csv", "")
+			#list_of_files[file] = list_of_files[file].replace("-", "_")
+			#list_of_files[file] = list_of_files[file].replace("+", "_")
+			#list_of_files[file] = list_of_files[file].replace("/", "_")
+			#list_of_files[file] = list_of_files[file].replace("*", "_")
+			#list_of_files[file] = list_of_files[file].replace("=", "_")
+			#list_of_files[file] = list_of_files[file].replace("~", "_")
+			#list_of_files[file] = list_of_files[file].replace(".", "_")
+			#list_of_files[file] = list_of_files[file].replace(",", "_")
+			#list_of_files[file] = list_of_files[file].replace(";", "_")
+			#list_of_files[file] = list_of_files[file].replace(":", "_")
+			#list_of_files[file] = list_of_files[file].replace("`", "_")
+		#elif ".xlsx" in list_of_files[file]:
+			#list_of_files[file] = list_of_files[file].replace(".xlsx", "")
+			#list_of_files[file] = list_of_files[file].replace("-", "_")
+			#list_of_files[file] = list_of_files[file].replace("+", "_")
+			#list_of_files[file] = list_of_files[file].replace("*", "_")
+			#list_of_files[file] = list_of_files[file].replace("=", "_")
+			#list_of_files[file] = list_of_files[file].replace("~", "_")
+			#list_of_files[file] = list_of_files[file].replace(".", "_")
+			#list_of_files[file] = list_of_files[file].replace(",", "_")
+			#list_of_files[file] = list_of_files[file].replace(";", "_")
+			#list_of_files[file] = list_of_files[file].replace(":", "_")
+			#list_of_files[file] = list_of_files[file].replace("`", "_")
+		#file+=1
 	clist_to_execute = []
-	for filename in range(len(list_of_files)):
-		for filecopy in range(len(list_of_files_copy)):
-			#clist_to_execute.append('{} = 0'.format(list_of_files[filename]))
-			#clist_to_execute.append('{} = StringField({})'.format(list_of_files[filename], list_of_files_copy[filecopy]))
-			#clist_to_execute.append('b1 = 0')
-			#clist_to_execute.append('b1 = StringField({})'.format(list_of_files_copy[filecopy]))
-			filecopy+=1
-		filename+=1
+	blist = []
+	for filecopy in range(len(list_of_files)):
+		blist.append('b{}'.format(filecopy))
+		#clist_to_execute.append('{} = 0'.format(list_of_files[filename]))
+		#clist_to_execute.append('{} = StringField({})'.format(list_of_files[filename], list_of_files_copy[filecopy]))
+		#clist_to_execute.append('b1 = 0')
+		#clist_to_execute.append('b1 = StringField({})'.format(list_of_files_copy[filecopy]))
+		filecopy+=1
+	for filecopy in range(len(list_of_files)):
+		clist_to_execute.append('{} = StringField("{}")'.format(blist[filecopy], list_of_files[filecopy]))
+		filecopy+=1
 	for exe in clist_to_execute:
 		exec(exe)
-	for file in list_of_files_copy:
-		b1 = StringField("{}".format(file))
+	#for file in list_of_files_copy:
+		#b1 = StringField("{}".format(file))
 	#b2 = StringField("B2 Label")
+	#b3 = StringField("B3 Label")
 
 '''class B(FlaskForm):
 	b1 = StringField("B1 Label")'''
