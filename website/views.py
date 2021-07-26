@@ -41,23 +41,23 @@ def upload_files():
 def yvariables():
 	class B(FlaskForm):
 		list_of_files=list_of_files
-		#path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
-		#directory = os.listdir(path)
-		#global listf
-		#listf = []
-		#if len(directory) != 0:
-			#for file in directory:
-				#listf.append(file)
-		#global list_to_use
-		#list_to_use = list(set(list_of_files).intersection(listf))
+		path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
+		directory = os.listdir(path)
+		global listf
+		listf = []
+		if len(directory) != 0:
+			for file in directory:
+				listf.append(file)
+		global list_to_use
+		list_to_use = list(set(list_of_files).intersection(listf))
 		global clist_to_execute
 		clist_to_execute = []
 		blist = []
-		for file in range(len(list_of_files)):
+		for file in range(len(list_to_use)):
 			blist.append('b{}'.format(file))
 			file+=1
-		for file in range(len(list_of_files)):
-			clist_to_execute.append('{} = StringField("{}")'.format(blist[file], list_of_files[file]))
+		for file in range(len(list_to_use)):
+			clist_to_execute.append('{} = StringField("{}")'.format(blist[file], list_to_use[file]))
 			file+=1
 		for exe in clist_to_execute:
 			exec(exe)
