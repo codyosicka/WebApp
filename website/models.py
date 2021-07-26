@@ -1,6 +1,9 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy import func
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, FieldList, FormField
+import os
 
 
 class Note(db.Model):
@@ -16,3 +19,5 @@ class User(db.Model, UserMixin):
 	password = db.Column(db.String(150))
 	first_name = db.Column(db.String(150))
 	notes = db.relationship('Note') # everytime a note is created, add into a User-notes relationship that note ID; this relationship field will be like a list
+
+

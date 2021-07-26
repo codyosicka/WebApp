@@ -3,8 +3,14 @@
 <br>
 <br>
 
-
 {% block content %}
+
+<br>
+
+{{msg}}
+
+<br>
+<br>
 
 <form action="/#" method="POST" role=form>
 {{ form.hidden_tag() }}
@@ -18,17 +24,6 @@
 {{ form.s }}
 
 
-</form>
-
-<br>
-<br>
-
-
-{{msg}}
-<form action="#" method="POST">
-	<p>Inputs:</p>
-	<p><input type="text" name="yvar" /></p>
-	<p><input type="submit" value="Submit" /></p>
 </form>
 
 {% endblock %}
