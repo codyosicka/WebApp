@@ -41,7 +41,7 @@ def upload_files():
 def yvariables():
 	class B(FlaskForm):
 		list_of_files=list_of_files
-		path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
+		path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files" # When the website is launched, this path will have to change
 		directory = os.listdir(path)
 		global listf
 		listf = []
