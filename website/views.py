@@ -9,8 +9,8 @@ import os
 import paypalrestsdk
 import time
 
-
-#list_of_files = []
+global list_of_files
+list_of_files = []
 
 views = Blueprint('views', __name__, template_folder="templates")
 
@@ -22,9 +22,9 @@ def home():
 
 @views.route('/upload_files', methods=["GET", "POST"])
 def upload_files():
+	#global list_of_files
+	#list_of_files = []
 	if request.method == 'POST':
-		global list_of_files
-		list_of_files = []
 		#list_of_files = request.files.getlist('file_name')
 		for f in request.files.getlist('file_name'):
 			list_of_files.append(f.filename)
@@ -36,37 +36,36 @@ def upload_files():
 
 
 
-class B(FlaskForm):
-	path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
-	directory = os.listdir(path)
-	global listf
-	listf = []
-	if len(directory) != 0:
-		for file in directory:
-			listf.append(file)
-	global list_to_use
-	#list_to_use = list(set(list_of_files).intersection(listf))
-	global clist_to_execute
-	clist_to_execute = []
-	blist = []
-	for file in range(len(listf)):
-		blist.append('b{}'.format(file))
-		file+=1
-	for file in range(len(listf)):
-		clist_to_execute.append('{} = StringField("{}")'.format(blist[file], listf[file]))
-		file+=1
-	for exe in clist_to_execute:
-		exec(exe)
-
-
-class A(FlaskForm):
-	a2 = FieldList(FormField(B), min_entries=1)
-	s = SubmitField("Submit Y Variables")
-
-
 
 @views.route('/yvariables', methods=["GET", "POST"])
 def yvariables():
+	class B(FlaskForm):
+		list_of_files=list_of_files
+		#path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
+		#directory = os.listdir(path)
+		#global listf
+		#listf = []
+		#if len(directory) != 0:
+			#for file in directory:
+				#listf.append(file)
+		#global list_to_use
+		#list_to_use = list(set(list_of_files).intersection(listf))
+		global clist_to_execute
+		clist_to_execute = []
+		blist = []
+		for file in range(len(list_of_files)):
+			blist.append('b{}'.format(file))
+			file+=1
+		for file in range(len(list_of_files)):
+			clist_to_execute.append('{} = StringField("{}")'.format(blist[file], list_of_files[file]))
+			file+=1
+		for exe in clist_to_execute:
+			exec(exe)
+
+
+	class A(FlaskForm):
+		a2 = FieldList(FormField(B), min_entries=1)
+		s = SubmitField("Submit Y Variables")
 	form = A()
 	if request.method == 'POST':
 		#yvariable = request.form["yvar"]
@@ -79,8 +78,9 @@ def yvariables():
 		#return redirect(url_for("upload_files"))
 		return render_template('yvariables.html', msg="Input Successful!", form=form)
 	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form)
-	#return f"{list_to_use}"
+	#return f"{clist_to_execute}"
 	#return f"{list_of_files}"
+	#return f"{list_to_use}"
 
 def r():
 	b = request.form
