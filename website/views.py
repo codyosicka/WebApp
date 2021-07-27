@@ -30,7 +30,6 @@ def upload_files():
 			list_of_files.append(f.filename)
 			f.save(os.path.join(current_app.config["UPLOAD_PATH"], f.filename))
 		#return render_template("upload-files.html", msg="Files have been uploaded successfully")
-		#time.sleep(2)
 		return redirect(url_for('views.yvariables'))
 	return render_template("upload-files.html", msg="Please Choose a file")
 
@@ -62,12 +61,12 @@ def yvariables():
 		for exe in clist_to_execute:
 			exec(exe)
 
-
 	class A(FlaskForm):
 		a2 = FieldList(FormField(B), min_entries=1)
 		s = SubmitField("Submit Y Variables")
 	form = A()
-	if request.method == 'POST':
+	#if request.method == 'POST':
+
 		#yvariable = request.form["yvar"]
 		#save_path = current_app.config["UPLOAD_PATH"]
 		#file_text_name = "data.txt"
@@ -76,16 +75,19 @@ def yvariables():
 		#outfile.write(yvariable)
 		#outfile.close()
 		#return redirect(url_for("upload_files"))
-		return render_template('yvariables.html', msg="Input Successful!", form=form)
+
+		#return render_template('yvariables.html', msg="Input Successful!", form=form)
+		#return output
 	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form)
 	#return f"{clist_to_execute}"
 	#return f"{list_of_files}"
 	#return f"{list_to_use}"
 
+@views.route("/r", methods=["POST"])
 def r():
 	b = request.form
 	br = {x:b[x] for x in b if "a2-" in x}
-	return render_template(b=br)
+	return render_template("yvresult.html", b=br)
 
 
 
