@@ -22,8 +22,6 @@ def home():
 
 @views.route('/upload_files', methods=["GET", "POST"])
 def upload_files():
-	#global list_of_files
-	#list_of_files = []
 	if request.method == 'POST':
 		#list_of_files = request.files.getlist('file_name')
 		for f in request.files.getlist('file_name'):
@@ -38,6 +36,7 @@ def upload_files():
 
 @views.route('/yvariables', methods=["GET", "POST"])
 def yvariables():
+
 	class B(FlaskForm):
 		list_of_files=list_of_files
 		path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files" # When the website is launched, this path will have to change
@@ -64,30 +63,51 @@ def yvariables():
 	class A(FlaskForm):
 		a2 = FieldList(FormField(B), min_entries=1)
 		s = SubmitField("Submit Y Variables")
+
 	form = A()
-	#if request.method == 'POST':
+	if request.method == "POST":
 
-		#yvariable = request.form["yvar"]
-		#save_path = current_app.config["UPLOAD_PATH"]
-		#file_text_name = "data.txt"
-		#completeName = os.path.join(save_path, file_text_name)
-		#outfile = open(completeName, 'w')
-		#outfile.write(yvariable)
-		#outfile.close()
-		#return redirect(url_for("upload_files"))
+		print("POOOOOOSSSSSSTTTTTEEEEEEDDDD")
 
-		#return render_template('yvariables.html', msg="Input Successful!", form=form)
-		#return output
+		b = request.form
+		br = {x:b[x] for x in b if "a2-" in x}
+		del br['a2-0-csrf_token']
+		newkey = []
+		for r in range(len(br)):
+			newkey.append(r)
+		oldkey = []
+		for a in br:
+			oldkey.append(a)
+		for r in range(len(oldkey)):
+			br[newkey[r]] = br.pop(oldkey[r])
+		newlist = []
+		for l in list_to_use:
+			if ".csv" in l:
+				newlist.append(l.replace(".csv", ""))
+			elif ".xlsx" in l:
+				newlist.append(l.replace(".xlsx", ""))
+		print(newlist)
+		text_list = []
+		for r in range(len(newlist)):
+			text_list.append("{}.txt".format(newlist[r]))
+		for text in range(len(text_list)):
+			saveFile = open("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
+			saveFile.write(br[text])
+			saveFile.close()
+
+		#return redirect(url_for("views.home"))
+		return render_template('yvariables.html', msg="Upload Successful", form=form)
+	else:
+		print("NOT POSTED")
 	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form)
-	#return f"{clist_to_execute}"
-	#return f"{list_of_files}"
-	#return f"{list_to_use}"
+
+
 
 @views.route("/r", methods=["POST"])
 def r():
 	b = request.form
 	br = {x:b[x] for x in b if "a2-" in x}
-	return render_template("yvresult.html", b=br)
+	#return render_template("yvresult.html", b=br)
 
 
 
