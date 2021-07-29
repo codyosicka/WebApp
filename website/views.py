@@ -86,7 +86,7 @@ def yvariables():
 				newlist.append(l.replace(".csv", ""))
 			elif ".xlsx" in l:
 				newlist.append(l.replace(".xlsx", ""))
-		print(newlist)
+		#print(newlist)
 		text_list = []
 		for r in range(len(newlist)):
 			text_list.append("{}.txt".format(newlist[r]))
