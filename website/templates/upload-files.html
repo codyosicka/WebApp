@@ -1,10 +1,10 @@
-{% block title %}Data Upload{% endblock %}
+<p style="text-align: center">{% block title %}Data Upload{% endblock %}</p>
+
 <br>
 <br>
 {% block content %}
-{{msg}}
-<br>
-<form action="/upload_files" method="POST" enctype="multipart/form-data">
+<p style="text-align: center">{{msg}}</p>
+<form action="/upload_files" method="POST" enctype="multipart/form-data" style="text-align: center">
 	<input type="file" name="file_name" multiple>
 	<input type="submit" value="Submit">
 </form>

@@ -95,8 +95,8 @@ def yvariables():
 			saveFile.write(br[text])
 			saveFile.close()
 
-		#return redirect(url_for("views.home"))
-		return render_template('yvariables.html', msg="Upload Successful", form=form)
+		return redirect(url_for("views.home"))
+		#return render_template('yvariables.html', msg="Upload Successful", form=form)
 	else:
 		print("NOT POSTED")
 	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form)
