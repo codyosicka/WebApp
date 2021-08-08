@@ -11,6 +11,7 @@ def create_app():
 	app = Flask(__name__)
 	app.config['SECRET_KEY'] = 'a'
 	app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+	#app.config["UPLOAD_PATH"] = "C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files"
 	app.config["UPLOAD_PATH"] = 'C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files' # When the website is launched, this path will have to change
 	db.init_app(app)
 

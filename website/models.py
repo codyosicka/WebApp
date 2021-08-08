@@ -19,31 +19,3 @@ class User(db.Model, UserMixin):
 	password = db.Column(db.String(150))
 	first_name = db.Column(db.String(150))
 	notes = db.relationship('Note') # everytime a note is created, add into a User-notes relationship that note ID; this relationship field will be like a list
-
-
-class B(FlaskForm):
-	path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
-	directory = os.listdir(path)
-	global listf
-	listf = []
-	if len(directory) != 0:
-		for file in directory:
-			listf.append(file)
-	global list_to_use
-	#list_to_use = list(set(list_of_files).intersection(listf))
-	global clist_to_execute
-	clist_to_execute = []
-	blist = []
-	for file in range(len(listf)):
-		blist.append('b{}'.format(file))
-		file+=1
-	for file in range(len(listf)):
-		clist_to_execute.append('{} = StringField("{}")'.format(blist[file], listf[file]))
-		file+=1
-	for exe in clist_to_execute:
-		exec(exe)
-
-
-class A(FlaskForm):
-	a2 = FieldList(FormField(B), min_entries=1)
-	s = SubmitField("Submit Y Variables")
