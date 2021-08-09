@@ -39,8 +39,8 @@ def yvariables():
 
 	class B(FlaskForm):
 		list_of_files=list_of_files
-		path = "C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files"
-		#path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files" # When the website is launched, this path will have to change
+		#path = "C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files"
+		path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files" # When the website is launched, this path will have to change
 		directory = os.listdir(path)
 		global listf
 		listf = []
@@ -92,8 +92,8 @@ def yvariables():
 		for r in range(len(newlist)):
 			text_list.append("{}.txt".format(newlist[r]))
 		for text in range(len(text_list)):
-			saveFile = open("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
-			#saveFile = open("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
+			#saveFile = open("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
+			saveFile = open("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
 			saveFile.write(br[text])
 			saveFile.close()
 
