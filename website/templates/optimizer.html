@@ -1,0 +1,17 @@
+<p style="text-align: center">{% block title %}Optimizer Input{% endblock %}</p>
+
+<br>
+
+{% block content %}
+
+<body style="text-align: center">
+	<form method="POST">
+		{{ form.crsf_token }}
+		{{ form.equation }}
+		{{ form.variable }}
+		<input type="submit">
+	</form>
+</body>
+
+
+{% endblock %}

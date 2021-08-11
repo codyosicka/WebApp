@@ -1,24 +1,31 @@
 from flask import Blueprint, render_template, request, flash, jsonify, current_app, redirect, url_for
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FieldList, FormField
+from wtforms import StringField, SubmitField, FieldList, FormField, SelectField
 from .models import Note
 from . import db
 import json
 import os
 import paypalrestsdk
 import time
+from GeneralPythonCopy.General import General
+
 
 global list_of_files
 list_of_files = []
 
 views = Blueprint('views', __name__, template_folder="templates")
 
+# Home Section
+
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
 	return render_template("home.html", user=current_user)
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Upload Files Section
 
 @views.route('/upload_files', methods=["GET", "POST"])
 def upload_files():
@@ -31,8 +38,9 @@ def upload_files():
 		return redirect(url_for('views.yvariables'))
 	return render_template("upload-files.html", msg="Please Choose a file")
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+# Y Variables Section
 
 @views.route('/yvariables', methods=["GET", "POST"])
 def yvariables():
@@ -68,7 +76,7 @@ def yvariables():
 	form = A()
 	if request.method == "POST":
 
-		print("POOOOOOSSSSSSTTTTTEEEEEEDDDD")
+		print("POSTED")
 
 		b = request.form
 		br = {x:b[x] for x in b if "a2-" in x}
@@ -87,7 +95,6 @@ def yvariables():
 				newlist.append(l.replace(".csv", ""))
 			elif ".xlsx" in l:
 				newlist.append(l.replace(".xlsx", ""))
-		#print(newlist)
 		text_list = []
 		for r in range(len(newlist)):
 			text_list.append("{}.txt".format(newlist[r]))
@@ -103,15 +110,40 @@ def yvariables():
 		print("NOT POSTED")
 	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form)
 
-
-
 @views.route("/r", methods=["POST"])
 def r():
 	b = request.form
 	br = {x:b[x] for x in b if "a2-" in x}
 	#return render_template("yvresult.html", b=br)
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+# Optimizer Section
+
+class Form(FlaskForm):
+	equation = SelectField('equation', choices=[])
+	variable = SelectField('variable', choices=[])
+	
+@views.route("/optimizer", methods=["GET", "POST"])
+def optimizer():
+
+	equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+	sql = "SELECT * FROM equations_table"
+	read_sql = General.pd.read_sql(sql, equations_conn)
+	
+	form = Form()
+	form.equation.choices = [(x, x) for x in read_sql['equation_name']]
+	form.variable.choices = [()]
+
+	equations_conn.dispose()
+
+	return render_template('optimizer.html', form=form)
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Paypal Section
 
 paypalrestsdk.configure({
 		"mode": "sandbox", # sandbox or live
@@ -169,3 +201,4 @@ def execute():
 
     return jsonify({'success' : success})
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
