@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2021-08-10">
+    <creator>NetworkX 2.5.1</creator>
+  </meta>
+  <graph defaultedgetype="directed" mode="static" name="">
+    <nodes>
+      <node id="Gold" label="Gold" />
+      <node id="BGMI" label="BGMI" />
+      <node id="XAU" label="XAU" />
+      <node id="Silver" label="Silver" />
+    </nodes>
+    <edges>
+      <edge source="BGMI" target="Silver" id="0" />
+      <edge source="XAU" target="Gold" id="1" />
+      <edge source="Silver" target="Gold" id="2" />
+    </edges>
+  </graph>
+</gexf>
