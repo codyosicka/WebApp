@@ -16,6 +16,8 @@ list_of_files = []
 
 views = Blueprint('views', __name__, template_folder="templates")
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Home Section
 
 @views.route('/', methods=['GET', 'POST'])
@@ -118,30 +120,56 @@ def r():
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 # Optimizer Section
+
+equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+sql = "SELECT * FROM equations_table"
+read_sql = General.pd.read_sql(sql, equations_conn)
 
 class Form(FlaskForm):
 	equation = SelectField('equation', choices=[])
 	variable = SelectField('variable', choices=[])
-	
+
+
 @views.route("/optimizer", methods=["GET", "POST"])
 def optimizer():
-
-	equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
-	sql = "SELECT * FROM equations_table"
-	read_sql = General.pd.read_sql(sql, equations_conn)
-	
 	form = Form()
-	form.equation.choices = [(x, x) for x in read_sql['equation_name']]
-	form.variable.choices = [()]
+	form.equation.choices = [(y, y) for y in read_sql['equation_name']]
+	#form.variable.choices = [(x, x) for x in read_sql['x_variables']]
 
-	equations_conn.dispose()
+
+	if request.method == "POST":
+		return '</h1>Equation: {}, Variable: {}</h1>'.format(form.equation.data, form.variable.data)
 
 	return render_template('optimizer.html', form=form)
 
+@views.route("/variable/<equation>")
+def variable(equation):
+	variables = read_sql[read_sql['equation_name']==equation]['x_variables'].values.tolist()[0].split(",")
+
+	variableArray = []
+
+	for v in range(len(variables)):
+		vObj = {}
+		vObj['id'] = v
+		vObj['var'] = variables[v]
+		variableArray.append(vObj)
+
+	return jsonify({"variables": variableArray})
+
+
+
+equations_conn.dispose()
+
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Simulator Section
+
+@views.route("/simulator", methods=["GET", "POST"])
+def simulator():
+	pass
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Paypal Section
 

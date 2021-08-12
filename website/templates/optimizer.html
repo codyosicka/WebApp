@@ -11,6 +11,26 @@
 		{{ form.variable }}
 		<input type="submit">
 	</form>
+	<script>
+		let equation_select = document.getElementById('equation');
+		let variable_select = document.getElementById('variable');
+
+		equation_select.onchange = function() {
+			equation = equation_select.value;
+
+			fetch('/variable/'+equation).then(function(response) {
+				response.json().then(function() {
+					let optionHTML = '';
+					for (let variable of data.variables) {
+						optionHTML += '<option value="' + variable.id + '">' + variable.var + '</option>';
+					}
+
+					variable_select.innerHTML = optionHTML;
+
+				});
+			});
+		}
+	</script>
 </body>
 
 
