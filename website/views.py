@@ -127,7 +127,7 @@ sql = "SELECT * FROM equations_table"
 read_sql = General.pd.read_sql(sql, equations_conn)
 
 class Form(FlaskForm):
-	equation = SelectField('equation', choices=[])
+	equation = SelectField('equation', choices=[]) # NEED TO FIX SELECT FIELD TO HAVE EMPTY CHOICE BY DEFAULT
 	variable = SelectField('variable', choices=[])
 	objective = SelectField('objective', choices=[("Maximize", "Maximize"), ("Minimize", "Minimize")])
 
@@ -152,6 +152,19 @@ def optimizer():
 @views.route("/variable/<equation>")
 def variable(equation):
 	variables = read_sql[read_sql['equation_name']==equation]['x_variables'].values.tolist()[0].split(",")
+
+	actual = read_sql[read_sql['equation_name']==equation]['equation'].values.tolist()[0]
+	actual = General.sympify(actual)
+	actual_symbols = list(actual.free_symbols)
+	actual_symbols = list(map(str, actual_symbols))
+	actual_symbols = [a.replace("X","") for a in actual_symbols]
+	actual_symbols = list(set(map(int, actual_symbols)))
+
+	actual_variables = []
+	for a in actual_symbols:
+		actual_variables.append(variables[a])
+	variables = actual_variables
+
 	variableArray = []
 
 	for v in variables:
