@@ -38,7 +38,7 @@ def upload_files():
 			f.save(os.path.join(current_app.config["UPLOAD_PATH"], f.filename))
 		#return render_template("upload-files.html", msg="Files have been uploaded successfully")
 		return redirect(url_for('views.yvariables'))
-	return render_template("upload-files.html", msg="Please Choose a file")
+	return render_template("upload-files.html", msg="Please Choose a file", user=current_user)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ def yvariables():
 		#return render_template('yvariables.html', msg="Upload Successful", form=form)
 	else:
 		print("NOT POSTED")
-	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form)
+	return render_template('yvariables.html', msg="Please Input the Y Variables for each file uploaded", form=form, user=current_user)
 
 @views.route("/r", methods=["POST"])
 def r():
@@ -129,6 +129,7 @@ read_sql = General.pd.read_sql(sql, equations_conn)
 class Form(FlaskForm):
 	equation = SelectField('equation', choices=[])
 	variable = SelectField('variable', choices=[])
+	objective = SelectField('objective', choices=[("Maximize", "Maximize"), ("Minimize", "Minimize")])
 
 
 @views.route("/optimizer", methods=["GET", "POST"])
@@ -145,7 +146,7 @@ def optimizer():
 	if request.method == "POST":
 		return '<h1>Equation: {}, Variable: {}</h1>'.format(form.equation.data, form.variable.data)
 
-	return render_template('optimizer.html', form=form)
+	return render_template('optimizer.html', form=form, user=current_user)
 
 
 @views.route("/variable/<equation>")
@@ -171,7 +172,7 @@ equations_conn.dispose()
 
 @views.route("/simulator", methods=["GET", "POST"])
 def simulator():
-	pass
+	return render_template('simulator.html', user=current_user)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 

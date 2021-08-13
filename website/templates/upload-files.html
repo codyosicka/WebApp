@@ -1,8 +1,9 @@
-<p style="text-align: center">{% block title %}Data Upload{% endblock %}</p>
+{% extends "base.html" %} {% block title %}Data Upload{% endblock %}
 
-<br>
-<br>
 {% block content %}
+
+<h1 align="center">Data Upload</h1>
+
 <p style="text-align: center">{{msg}}</p>
 <form action="/upload_files" method="POST" enctype="multipart/form-data" style="text-align: center">
 	<input type="file" name="file_name" multiple>

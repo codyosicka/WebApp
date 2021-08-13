@@ -1,14 +1,15 @@
-<p style="text-align: center">{% block title %}Optimizer Input{% endblock %}</p>
-
-<br>
-
+{% extends "base.html" %} {% block title %}Optimizer Input{% endblock %}
 {% block content %}
+
+<h1 align="center">Optimizer</h1>
+<br>
 
 <body style="text-align: center">
 	<form method="POST">
 		{{ form.crsf_token }}
 		{{ form.equation }}
 		{{ form.variable }}
+		{{ form.objective }}
 		<input type="submit">
 	</form>
 	<script>
