@@ -135,24 +135,28 @@ class Form(FlaskForm):
 def optimizer():
 	form = Form()
 	form.equation.choices = [(y, y) for y in read_sql['equation_name']]
-	#form.variable.choices = [(x, x) for x in read_sql['x_variables']]
+
+	variables_ = read_sql['x_variables'].values.tolist()
+	variables_ = [','.join(variables_)]
+	variables_ = list(set(variables_[0].split(",")))
+	form.variable.choices = [(x, x) for x in variables_]
 
 
 	if request.method == "POST":
-		return '</h1>Equation: {}, Variable: {}</h1>'.format(form.equation.data, form.variable.data)
+		return '<h1>Equation: {}, Variable: {}</h1>'.format(form.equation.data, form.variable.data)
 
 	return render_template('optimizer.html', form=form)
+
 
 @views.route("/variable/<equation>")
 def variable(equation):
 	variables = read_sql[read_sql['equation_name']==equation]['x_variables'].values.tolist()[0].split(",")
-
 	variableArray = []
 
-	for v in range(len(variables)):
+	for v in variables:
 		vObj = {}
 		vObj['id'] = v
-		vObj['var'] = variables[v]
+		vObj['var'] = v
 		variableArray.append(vObj)
 
 	return jsonify({"variables": variableArray})

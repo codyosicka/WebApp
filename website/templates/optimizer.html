@@ -18,9 +18,10 @@
 		equation_select.onchange = function() {
 			equation = equation_select.value;
 
-			fetch('/variable/'+equation).then(function(response) {
-				response.json().then(function() {
+			fetch('/variable/' + equation).then(function(response) {
+				response.json().then(function(data) {
 					let optionHTML = '';
+
 					for (let variable of data.variables) {
 						optionHTML += '<option value="' + variable.id + '">' + variable.var + '</option>';
 					}
