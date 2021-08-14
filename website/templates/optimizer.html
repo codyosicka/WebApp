@@ -7,8 +7,11 @@
 <body style="text-align: center">
 	<form method="POST">
 		{{ form.crsf_token }}
+		<label>Equation Name:</label>
 		{{ form.equation }}
+		<label>Variable:</label>
 		{{ form.variable }}
+		<label>Objective:</label>
 		{{ form.objective }}
 		<input type="submit">
 	</form>

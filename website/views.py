@@ -129,18 +129,27 @@ read_sql = General.pd.read_sql(sql, equations_conn)
 class Form(FlaskForm):
 	equation = SelectField('equation', choices=[]) # NEED TO FIX SELECT FIELD TO HAVE EMPTY CHOICE BY DEFAULT
 	variable = SelectField('variable', choices=[])
-	objective = SelectField('objective', choices=[("Maximize", "Maximize"), ("Minimize", "Minimize")])
+	objective = SelectField('objective', choices=[("Maximize", "Maximize"), ("Minimize", "Minimize"), ('','')])
 
 
 @views.route("/optimizer", methods=["GET", "POST"])
 def optimizer():
 	form = Form()
 	form.equation.choices = [(y, y) for y in read_sql['equation_name']]
+	form.equation.choices.append(('',''))
+	form.equation.default = ''
+	form.process()
 
 	variables_ = read_sql['x_variables'].values.tolist()
 	variables_ = [','.join(variables_)]
 	variables_ = list(set(variables_[0].split(",")))
 	form.variable.choices = [(x, x) for x in variables_]
+	form.variable.choices.append(('',''))
+	form.variable.default = ''
+	form.process()
+
+	form.objective.default = ''
+	form.process()
 
 
 	if request.method == "POST":
