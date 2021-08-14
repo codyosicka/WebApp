@@ -137,23 +137,21 @@ def optimizer():
 	form = Form()
 	form.equation.choices = [(y, y) for y in read_sql['equation_name']]
 	form.equation.choices.append(('',''))
-	form.equation.default = ''
-	form.process()
 
 	variables_ = read_sql['x_variables'].values.tolist()
 	variables_ = [','.join(variables_)]
 	variables_ = list(set(variables_[0].split(",")))
 	form.variable.choices = [(x, x) for x in variables_]
 	form.variable.choices.append(('',''))
-	form.variable.default = ''
-	form.process()
-
-	form.objective.default = ''
-	form.process()
-
+	
 
 	if request.method == "POST":
-		return '<h1>Equation: {}, Variable: {}</h1>'.format(form.equation.data, form.variable.data)
+		return '<h1>Equation: {}, Variable: {}, Objective: {}</h1>'.format(form.equation.data, form.variable.data, form.objective.data)
+
+	form.equation.default = ''
+	form.variable.default = ''
+	form.objective.default = ''
+	form.process()
 
 	return render_template('optimizer.html', form=form, user=current_user)
 
