@@ -149,6 +149,9 @@ def optimizer():
 		if form.variable.data == 'Self':
 			# optimization is performed on the equation's already set y variable
 			pass
+		else:
+			# optimization is performed on the selected variable
+			pass
 		return '<h1 align="center">Equation: {}, Variable: {}, Objective: {}</h1>'.format(form.equation.data, form.variable.data, form.objective.data)
 
 	form.equation.default = ''
@@ -196,6 +199,10 @@ equations_conn.dispose()
 
 @views.route("/simulator", methods=["GET", "POST"])
 def simulator():
+
+	if request.method == "POST":
+		pass
+		
 	return render_template('simulator.html', user=current_user)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
