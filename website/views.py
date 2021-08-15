@@ -146,7 +146,10 @@ def optimizer():
 	
 
 	if request.method == "POST":
-		return '<h1>Equation: {}, Variable: {}, Objective: {}</h1>'.format(form.equation.data, form.variable.data, form.objective.data)
+		if form.variable.data == 'Self':
+			# optimization is performed on the equation's already set y variable
+			pass
+		return '<h1 align="center">Equation: {}, Variable: {}, Objective: {}</h1>'.format(form.equation.data, form.variable.data, form.objective.data)
 
 	form.equation.default = ''
 	form.variable.default = ''
@@ -170,6 +173,7 @@ def variable(equation):
 	actual_variables = []
 	for a in actual_symbols:
 		actual_variables.append(variables[a])
+	actual_variables.append('Self')
 	variables = actual_variables
 
 	variableArray = []
