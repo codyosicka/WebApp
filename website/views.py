@@ -147,12 +147,15 @@ def optimizer():
 
 	if request.method == "POST":
 		if form.variable.data == 'Self':
-			# optimization is performed on the equation's already set y variable
-			pass
+			self_results = General.self_optimizer(equation_name=form.equation.data, objective=form.objective.data)
+			return '<h1 align="center">Results: {}</h1>'.format(self_results)
 		else:
-			# optimization is performed on the selected variable
-			pass
-		return '<h1 align="center">Equation: {}, Variable: {}, Objective: {}</h1>'.format(form.equation.data, form.variable.data, form.objective.data)
+			try:
+				other_results = General.variable_optimizer(chosen_variable=form.variable.data, equation_name=form.equation.data, objective=form.objective.data)
+				return '<h1 align="center">Results: {}</h1>'.format(other_results)
+			except:
+				return'<h1 align="center">Sorry, this particular function or variable cannot be optimized</h1>'
+		#return '<h1 align="center">Equation: {}, Variable: {}, Objective: {}</h1>'.format(form.equation.data, form.variable.data, form.objective.data)
 
 	form.equation.default = ''
 	form.variable.default = ''
