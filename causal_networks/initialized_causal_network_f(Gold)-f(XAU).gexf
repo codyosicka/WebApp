@@ -5,16 +5,11 @@
   </meta>
   <graph defaultedgetype="directed" mode="static" name="">
     <nodes>
-      <node id="Temperature Outside (K)" label="Temperature Outside (K)" />
-      <node id="Weight on Piston (N)" label="Weight on Piston (N)" />
-      <node id="Ideal Gas Constant" label="Ideal Gas Constant" />
-      <node id="BGMI" label="BGMI" />
       <node id="Silver" label="Silver" />
+      <node id="BGMI" label="BGMI" />
     </nodes>
     <edges>
-      <edge source="Temperature Outside (K)" target="Ideal Gas Constant" id="0" />
-      <edge source="Weight on Piston (N)" target="Ideal Gas Constant" id="1" />
-      <edge source="BGMI" target="Silver" id="2" />
+      <edge source="BGMI" target="Silver" id="0" />
     </edges>
   </graph>
 </gexf>
