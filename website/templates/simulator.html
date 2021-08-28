@@ -4,5 +4,19 @@
 {% block content %}
 
 <h1 align="center">Simulator</h1>
+<br>
+
+<body style="text-align: center">
+	<form method="POST">
+		{{ form.crsf_token }}
+		<label>Variable Name:</label>
+		{{ form.variablename }}
+		<label>Variable Value:</label>
+		{{ form.variablename }}
+		<label>Target:</label>
+		{{ form.target }}
+		<input type="submit">
+	</form>
+</body>
 
 {% endblock %}

@@ -32,3 +32,10 @@ Process for User performing an optimization
 
 
 '''
+
+import sys
+marks = 12
+if marks < 20:
+    sys.exit("Marks is less than 20")
+else:
+    print("Marks is not less than 20")

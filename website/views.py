@@ -127,7 +127,7 @@ sql = "SELECT * FROM equations_table"
 read_sql = General.pd.read_sql(sql, equations_conn)
 
 class Form(FlaskForm):
-	equation = SelectField('equation', choices=[]) # NEED TO FIX SELECT FIELD TO HAVE EMPTY CHOICE BY DEFAULT
+	equation = SelectField('equation', choices=[])
 	variable = SelectField('variable', choices=[])
 	objective = SelectField('objective', choices=[("Maximize", "Maximize"), ("Minimize", "Minimize"), ('','')])
 
@@ -200,9 +200,21 @@ equations_conn.dispose()
 
 # Simulator Section
 
+equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+sql = "SELECT * FROM equations_table"
+read_sql = General.pd.read_sql(sql, equations_conn)
+
+class SimForm(FlaskForm):
+	variablename = SelectField('variablename', choices=[])
+	variablevalue = StringField('variablevalue')
+	target = SelectField('target', choices=[])
+
 @views.route("/simulator", methods=["GET", "POST"])
 def simulator():
-
+	form = SimForm()
+	form.variablename.choices = []
+	form.variablevalue.choices = []
+	form.target.choices = []
 	if request.method == "POST":
 		pass
 		
