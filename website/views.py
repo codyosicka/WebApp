@@ -204,6 +204,9 @@ equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mv
 sql = "SELECT * FROM equations_table"
 read_sql = General.pd.read_sql(sql, equations_conn)
 
+whole_graph = General.nx.read_gexf('C:\\Users\\Xaos\\Desktop\\Web App\\G_causal_network.gexf')
+nodes = whole_graph.nodes
+
 class SimForm(FlaskForm):
 	variablename = SelectField('variablename', choices=[])
 	variablevalue = StringField('variablevalue')
@@ -212,13 +215,23 @@ class SimForm(FlaskForm):
 @views.route("/simulator", methods=["GET", "POST"])
 def simulator():
 	form = SimForm()
-	form.variablename.choices = []
-	form.variablevalue.choices = []
-	form.target.choices = []
+	form.variablename.choices = [(x, x) for x in nodes]
+	form.variablename.choices.append(('',''))
+	form.target.choices = [(x, x) for x in nodes]
+	form.target.choices.append(('',''))
 	if request.method == "POST":
 		pass
 		
-	return render_template('simulator.html', user=current_user)
+	form.variablename.default = ''
+	form.target.default = ''
+	form.process()
+
+	return render_template('simulator.html', form=form, user=current_user)
+
+@views.route("/simulator/<target>")
+def target(variable_name):
+	new_nodes = [i for i in nodes]
+	new_nodes.remove(variable_name)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -12,11 +12,32 @@
 		<label>Variable Name:</label>
 		{{ form.variablename }}
 		<label>Variable Value:</label>
-		{{ form.variablename }}
+		{{ form.variablevalue }}
 		<label>Target:</label>
 		{{ form.target }}
 		<input type="submit">
 	</form>
+	<script>
+		let variablename_select = document.getElementById('variablename');
+		let target_select = document.getElementById('target');
+
+		equation_select.onchange = function() {
+			variablename = variablename_select.value;
+
+			fetch('/variable/' + variablename).then(function(response) {
+				response.json().then(function(data) {
+					let optionHTML = '';
+
+					for (let target of data.target) {
+						optionHTML += '<option value="' + target.id + '">' + target.var + '</option>';
+					}
+
+					target_select.innerHTML = optionHTML;
+
+				});
+			});
+		}
+	</script>
 </body>
 
 {% endblock %}
