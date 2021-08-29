@@ -220,7 +220,12 @@ def simulator():
 	form.target.choices = [(x, x) for x in nodes]
 	form.target.choices.append(('',''))
 	if request.method == "POST":
-		print("posted")
+		try:
+			sim_results = General.variable_simulator(variable_name=form.variablename.data, variable_value=form.variablevalue.data, 
+				target_variable=form.target.data)
+			return '<h1 align="center">Results: {}</h1>'.format(sim_results)
+		except:
+			return'<h1 align="center">Sorry, there was an error in solving for {}</h1>'.format(form.target.data)
 		
 	form.variablename.default = ''
 	form.target.default = ''
