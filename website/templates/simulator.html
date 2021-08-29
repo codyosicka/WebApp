@@ -1,6 +1,4 @@
 {% extends "base.html" %} {% block title %}Simulator Input{% endblock %}
-
-
 {% block content %}
 
 <h1 align="center">Simulator</h1>
@@ -21,15 +19,15 @@
 		let variablename_select = document.getElementById('variablename');
 		let target_select = document.getElementById('target');
 
-		equation_select.onchange = function() {
+		variablename_select.onchange = function() {
 			variablename = variablename_select.value;
 
-			fetch('/variable/' + variablename).then(function(response) {
+			fetch('/target/' + variablename).then(function(response) {
 				response.json().then(function(data) {
 					let optionHTML = '';
 
-					for (let target of data.target) {
-						optionHTML += '<option value="' + target.id + '">' + target.var + '</option>';
+					for (let target of data.targets) {
+						optionHTML += '<option value="' + target.id + '">' + target.tar + '</option>';
 					}
 
 					target_select.innerHTML = optionHTML;

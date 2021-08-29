@@ -220,7 +220,7 @@ def simulator():
 	form.target.choices = [(x, x) for x in nodes]
 	form.target.choices.append(('',''))
 	if request.method == "POST":
-		pass
+		print("posted")
 		
 	form.variablename.default = ''
 	form.target.default = ''
@@ -228,10 +228,20 @@ def simulator():
 
 	return render_template('simulator.html', form=form, user=current_user)
 
-@views.route("/simulator/<target>")
-def target(variable_name):
+@views.route("/target/<variablename>")
+def target(variablename):
 	new_nodes = [i for i in nodes]
-	new_nodes.remove(variable_name)
+	new_nodes.remove(variablename)
+
+	targetArray = []
+
+	for t in new_nodes:
+		tObj = {}
+		tObj['id'] = t
+		tObj['tar'] = t
+		targetArray.append(tObj)
+
+	return jsonify({"targets": targetArray})
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
