@@ -1,20 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
 <gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
-  <meta lastmodifieddate="2021-08-19">
+  <meta lastmodifieddate="2021-09-01">
     <creator>NetworkX 2.5.1</creator>
   </meta>
   <graph defaultedgetype="directed" mode="static" name="">
     <nodes>
-      <node id="Temperature Outside (K)" label="Temperature Outside (K)" />
-      <node id="Weight on Piston (N)" label="Weight on Piston (N)" />
-      <node id="Ideal Gas Constant" label="Ideal Gas Constant" />
-      <node id="BGMI" label="BGMI" />
-      <node id="Silver" label="Silver" />
+      <node id="Ideal_Gas_Constant" label="Ideal_Gas_Constant" />
+      <node id="Temperature_Outside_K" label="Temperature_Outside_K" />
+      <node id="Weight_on_Piston_N" label="Weight_on_Piston_N" />
     </nodes>
     <edges>
-      <edge source="Temperature Outside (K)" target="Ideal Gas Constant" id="0" />
-      <edge source="Weight on Piston (N)" target="Ideal Gas Constant" id="1" />
-      <edge source="BGMI" target="Silver" id="2" />
+      <edge source="Temperature_Outside_K" target="Ideal_Gas_Constant" id="0" />
+      <edge source="Weight_on_Piston_N" target="Ideal_Gas_Constant" id="1" />
     </edges>
   </graph>
 </gexf>
