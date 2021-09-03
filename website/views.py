@@ -14,6 +14,12 @@ from GeneralPythonCopy.General import General
 global list_of_files
 list_of_files = []
 
+equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+sql = "SELECT * FROM equations_table"
+read_sql = General.pd.read_sql(sql, equations_conn)
+
+
+
 views = Blueprint('views', __name__, template_folder="templates")
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -122,9 +128,6 @@ def r():
 
 # Optimizer Section
 
-equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
-sql = "SELECT * FROM equations_table"
-read_sql = General.pd.read_sql(sql, equations_conn)
 
 class Form(FlaskForm):
 	equation = SelectField('equation', choices=[])
@@ -193,19 +196,12 @@ def variable(equation):
 	return jsonify({"variables": variableArray})
 
 
-
-equations_conn.dispose()
-
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Simulator Section
 
-equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
-sql = "SELECT * FROM equations_table"
-read_sql = General.pd.read_sql(sql, equations_conn)
-
-#whole_graph = General.nx.read_gexf('C:\\Users\\Xaos\\Desktop\\Web App\\G_causal_network.gexf')
-whole_graph = General.nx.read_gexf('C:\\Users\\Buff14\\Desktop\\Web App\\G_causal_network.gexf')
+whole_graph = General.nx.read_gexf('C:\\Users\\Xaos\\Desktop\\Web App\\G_causal_network.gexf')
+#whole_graph = General.nx.read_gexf('C:\\Users\\Buff14\\Desktop\\Web App\\G_causal_network.gexf')
 nodes = whole_graph.nodes
 
 class SimForm(FlaskForm):
@@ -221,12 +217,15 @@ def simulator():
 	form.target.choices = [(x, x) for x in nodes]
 	form.target.choices.append(('',''))
 	if request.method == "POST":
-		try:
-			sim_results = General.variable_simulator(variable_name=form.variablename.data, variable_value=form.variablevalue.data, 
+		sim_results = General.variable_simulator(variable_name=form.variablename.data, variable_value=form.variablevalue.data, 
 				target_variable=form.target.data)
-			return '<h1 align="center">Results: {}</h1>'.format(sim_results)
-		except:
-			return'<h1 align="center">Sorry, there was an error in solving for {}</h1>'.format(form.target.data)
+		return '<h1 align="center">Results: {}</h1>'.format(sim_results)
+		#try:
+			#sim_results = General.variable_simulator(variable_name=form.variablename.data, variable_value=form.variablevalue.data, 
+				#target_variable=form.target.data)
+			#return '<h1 align="center">Results: {}</h1>'.format(sim_results)
+		#except:
+			#return'<h1 align="center">Sorry, there was an error in solving for {}</h1>'.format(form.target.data)
 		
 	form.variablename.default = ''
 	form.target.default = ''
@@ -310,3 +309,5 @@ def execute():
     return jsonify({'success' : success})
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+equations_conn.dispose()
