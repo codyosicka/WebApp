@@ -1,4 +1,6 @@
-from GeneralPythonCopy.General import General # stored in C:\Users\Xaos\AppData\Roaming\Python\Python39\site-packages
+# stored in C:\Program Files\Python39\Lib\site-packages 
+# or stored in C:\Users\Xaos\AppData\Roaming\Python\Python39\site-packages
+from GeneralPythonCopy.General import General
 import os
 import sys
 

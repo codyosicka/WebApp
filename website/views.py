@@ -204,7 +204,8 @@ equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mv
 sql = "SELECT * FROM equations_table"
 read_sql = General.pd.read_sql(sql, equations_conn)
 
-whole_graph = General.nx.read_gexf('C:\\Users\\Xaos\\Desktop\\Web App\\G_causal_network.gexf')
+#whole_graph = General.nx.read_gexf('C:\\Users\\Xaos\\Desktop\\Web App\\G_causal_network.gexf')
+whole_graph = General.nx.read_gexf('C:\\Users\\Buff14\\Desktop\\Web App\\G_causal_network.gexf')
 nodes = whole_graph.nodes
 
 class SimForm(FlaskForm):
