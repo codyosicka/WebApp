@@ -220,6 +220,7 @@ def simulator():
 		sim_results = General.variable_simulator(variable_name=form.variablename.data, variable_value=form.variablevalue.data, 
 				target_variable=form.target.data)
 		return '<h1 align="center">Results: {}</h1>'.format(sim_results)
+		#return '<h1 align="center">Results: {}</h1>'.format(read_sql)
 		#try:
 			#sim_results = General.variable_simulator(variable_name=form.variablename.data, variable_value=form.variablevalue.data, 
 				#target_variable=form.target.data)
