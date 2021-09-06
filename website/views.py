@@ -87,7 +87,8 @@ def yvariables():
 		print("POSTED")
 
 		b = request.form
-		br = {x:b[x] for x in b if "a2-" in x}
+		br = {x:b[x] for x in b if "a2-" in x} # b[x] are the y_variables
+		#print(br)
 		del br['a2-0-csrf_token']
 		newkey = []
 		for r in range(len(br)):
@@ -106,11 +107,109 @@ def yvariables():
 		text_list = []
 		for r in range(len(newlist)):
 			text_list.append("{}.txt".format(newlist[r]))
+		#print(text_list)
 		for text in range(len(text_list)):
 			#saveFile = open("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
-			saveFile = open("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w')
+			saveFile = open("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+text_list[text], 'w') # store the text files with y_variables in uploaded_files
 			saveFile.write(br[text])
 			saveFile.close()
+
+
+		# begin reg_and_upload.py stuff here:
+
+		#path = "C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files"
+		path = "C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files"
+		directory = os.listdir(path)
+		directory_sorted = sorted(directory) # sorts files and subdirectories within the current directory in alphabetic order
+
+		files_in_directory = []
+		if len(directory) != 0:
+			for file in directory_sorted:
+				files_in_directory.append(file)
+		else:
+			exit()
+
+		#print()
+		#print("There are files in the uploaded_files: ", files_in_directory)
+		#print()
+
+		txt_list = []
+		csv_xlsx_list = []
+		object_list = []
+		for file in files_in_directory:
+			if file.endswith(".csv"):
+				#csv_xlsx_list.append("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+file)
+				csv_xlsx_list.append("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+file)
+			elif file.endswith(".xlsx"):
+				#csv_xlsx_list.append("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+file)
+				csv_xlsx_list.append("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+file)
+			elif file.endswith(".txt"):
+				txt_list.append(file)
+				object_list.append(file.replace(".txt", ""))
+
+		read_variables = []
+		for file in directory_sorted:
+			if file.endswith(".txt"):
+				#open_file = open("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+file)
+				open_file = open("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+file)
+				read_variables.append(open_file.read())
+				open_file.close()
+
+		dict_of_files = {csv_xlsx_list[i]: txt_list[i] for i in range(len(csv_xlsx_list))}
+		dict_of_regression = {object_list[i]: General.gp_symbolic_regression(data=csv_xlsx_list[i], y_variable=read_variables[i]) for i in range(len(csv_xlsx_list))}
+
+		for regression in dict_of_regression:
+			General.uploadto_equations_database(dict_of_regression[regression])
+
+		for file in directory_sorted:
+			#os.remove("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+file)
+			os.remove("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+file)
+
+		#connection = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+		#table = General.pd.read_sql_query("SELECT * FROM equations_table", connection)
+		#print(table)
+		#connection.dispose()
+
+		# end reg_and_upload.py stuff
+
+
+		# begin build_structures.py stuff here
+
+		total_structures, total_names = General.complete_structures()[0], General.complete_structures()[1]
+
+		causal_results = {}
+		causal_executed = []
+		for structure in range(len(total_structures)):
+			# Requires that the structure is self-contained (number of functions = number of variables)
+			if total_structures[structure].shape[0] != total_structures[structure].shape[1]: # if the number of functions is not equal to the number of variables
+				continue
+			else:
+				causal_executed.append(structure) # causal_executed creates a list of the keys (here, structure) of the total_structures (and total_names) that were executed because they were self-contained
+				causal_results[structure] = General.static_causal_order(total_structures[structure]) # this is a dict of dict of causal results
+			structure+=1
+
+		new_causal_results_keys = list(range(len(list(causal_results.keys()))))
+		causal_results = dict(zip(new_causal_results_keys, causal_results.values())) # rekey the dictionary
+		
+		print('causal_executed: ', causal_executed)
+		print('causal_results: ', causal_results)
+
+		total_names_executed = {} # equals total_names but only the executed ones
+		total_structures_executed = {} # equals total_structures but only the executed ones
+		for i in range(len(causal_executed)):
+			total_names_executed[i] = total_names[causal_executed[i]] # now total_names_executed index will line up with causal_results
+			total_structures_executed[i] = total_structures[causal_executed[i]] # now total_structures_executed index will line up with causal_results
+
+		print('total_names_executed: ', total_names_executed)
+		print('total_structures_executed: ', total_structures_executed)
+
+		# Now total_names_executed, total_structures_executed, and causal_results should all have equal lengths
+		for i in range(len(list(causal_results.keys()))):
+			General.initialize_mini_network(total_structures_executed[list(causal_results.keys())[i]], causal_results[list(causal_results.keys())[i]], total_names_executed[list(causal_results.keys())[i]])
+		General.build_causal_network()
+		print("build network is done!")
+
+		# end build_structures.py stuff here
 
 		return redirect(url_for("views.home"))
 		#return render_template('yvariables.html', msg="Upload Successful", form=form)

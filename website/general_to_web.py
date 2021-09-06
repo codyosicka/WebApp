@@ -5,11 +5,11 @@ from GeneralPythonCopy.General import General
 
 Process for User uploading data:
 
-1. User: uploads files to Website and chooses the y_variable for the regression (discrete occurance)
-2. Backend: uploaded files go to uploaded_files which is accessible to the Web App py files 
-3. Backend: performs gp_symbolic_regression on the information uploaded (discrete occurance)
-4. Backend: uploads equation results to equations database (discrete occurance)
-5. Backend: creates complete structures out of the equations database whenever the database is updated (discrete occurance)
+1. User: uploads files to Website and chooses the y_variable for the regression (discrete occurance) [views.py]
+2. Backend: uploaded files go to uploaded_files along with a txt file with the specified y_variable which is accessible to the Web App py files [views.py]
+3. Backend: performs gp_symbolic_regression on the information uploaded (discrete occurance) [views.py]
+4. Backend: uploads equation results to equations database (discrete occurance) [views.py]
+5. Backend: creates complete structures out of the equations database whenever the database is updated (discrete occurance) [views.py]
 6. Backend: for each key in complete_structures resultant dictionary:
 			static_causal_order(5) (discrete occurance)
 9. Backend: initialize_mini_network(5, 7, name)
