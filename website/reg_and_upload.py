@@ -57,7 +57,7 @@ for file in directory_sorted:
 	os.remove("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+file)
 
 
-connection = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+connection = General.create_engine()
 table = General.pd.read_sql_query("SELECT * FROM equations_table", connection)
 print(table)
 connection.dispose()
