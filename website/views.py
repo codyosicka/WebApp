@@ -14,7 +14,7 @@ from GeneralPythonCopy.General import General
 global list_of_files
 list_of_files = []
 
-equations_conn = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+equations_conn = General.create_engine()
 sql = "SELECT * FROM equations_table"
 read_sql = General.pd.read_sql(sql, equations_conn)
 
@@ -165,7 +165,7 @@ def yvariables():
 			#os.remove("C:\\Users\\Buff14\\Desktop\\Web App\\uploaded_files\\"+file)
 			os.remove("C:\\Users\\Xaos\\Desktop\\Web App\\uploaded_files\\"+file)
 
-		#connection = General.create_engine("mysql+pymysql://unwp2wrnzt46hqsp:b95S8mvE5t3CQCFoM3ci@bh10avqiwijwc8nzbszc-mysql.services.clever-cloud.com/bh10avqiwijwc8nzbszc")
+		#connection = General.create_engine()
 		#table = General.pd.read_sql_query("SELECT * FROM equations_table", connection)
 		#print(table)
 		#connection.dispose()
@@ -354,8 +354,6 @@ def target(variablename):
 
 paypalrestsdk.configure({
 		"mode": "sandbox", # sandbox or live
-		"client_id": "AYbnfU8Pj_yiF8ULPsCiU_R7vqDvIZfFP1s0qWUrokJM5W5ON9ypx56X4mqqzcrUKmrT_eZmvTqkGpop",
-		"client_secret": "EE6mphrPS35PzRXwE1ZtsWWHMznLhBxrKh5vIxHtuxcCChGc0PpD9SELqpZgmenoGuLEDGR-CxvyRZ6W"
 		})
 
 @views.route('/payment_required')
